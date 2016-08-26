@@ -1,0 +1,41 @@
+<head>
+</head>
+
+<body>
+<a HREF="index.html"> <IMG SRC="rsl.gif"> </a>
+<hr>
+
+
+<h1>RSL_wsr88d_keep_short_refl</h1>
+
+<hr>
+
+<h3>Synopsis</h3>
+<b>#include &quot;rsl.h&quot;</b> <br>
+<b>void RSL_wsr88d_keep_short_refl(void);</b>
+
+<h3>
+<hr>Description</h3>
+Calling this function instructs the WSR-88D Level II ingest to keep
+short-range reflectivity collected in the velocity portion of a split
+cut.  Normally this short-range reflectivity is discarded.
+Calling this function also changes how split cuts are handled in the
+Radar structure and when writing to UF.  Split cut surveillance and
+Dopper sweeps are normally placed in the same sweep index in the Radar
+structure, as though they were taken in a single sweep, so that
+reflectivity (long-range), radial velocity, and spectrum width are at
+the same sweep index.  If <b>RSL_wsr88d_keep_short_refl</b> is called, each
+individual sweep of a split cut is stored at a separate index, so for
+example, the first sweep contains only long-range reflectivity (and
+dual-pol fields if present), and the second sweep contains short-range
+reflectivity, radial velocity, and spectrum width.  This pattern is
+repeated with the remaining split cuts.  If a UF is produced, the
+split cuts are written in like manner.
+<br>
+<hr>
+
+<h3>Return value</h3>
+None. 
+<hr>
+
+</body>
