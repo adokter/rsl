@@ -1,0 +1,34 @@
+# generated files
+config.log
+config.status
+/**/.dep/
+/**/Makefile
+config.h
+.libs
+.deps
+
+# binaries
+/**/*.o
+/**/*dSYM
+/**/*.so
+/**/*.lo
+/**/*.la
+examples/any_to_gif
+examples/any_to_ppm
+examples/any_to_uf
+examples/any_to_ufgz
+examples/bscan
+examples/cappi_image
+examples/dorade_main
+examples/killer_sweep
+examples/kwaj_subtract_one_day
+examples/lassen_to_gif
+examples/print_hash_table
+examples/print_header_info
+examples/qlook
+examples/sector
+examples/test_get_win
+examples/wsr88d_to_gif
+examples/wsr_hist_uf_test
+libtool
+stamp-h1
