@@ -6,5 +6,6 @@ Because git does not store original timestamps of files, running a simple `make`
 ```
 ./configure
 make AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
+make install AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
 ```
 or untar rsl-v1.49.tar locally to preserve timestamps
