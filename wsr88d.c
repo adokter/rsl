@@ -331,7 +331,7 @@ int wsr88d_read_tape_header(char *first_file,
   
   n = fread(wsr88d_tape_header, sizeof(Wsr88d_tape_header), 1, fp);
   if (n == 0) {
-    fprintf(stderr, "WARNING: %s is smaller than 31616 bytes.  It is not a tape header file.\n", first_file);
+    fprintf(stderr, "WARNING: %s is smaller than 31616 bytes (n=0).  It is not a tape header file.\n", first_file);
   } else {
     /* Try to read one more character.  If we can, then this is not a 
      * tape header file.  I suppose that we could look for '.' as the
