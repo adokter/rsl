@@ -453,16 +453,22 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
 	 */
 	if (vol_index == DZ_INDEX && (vcp_data.surveil_prf_num[isweep] == 0 &&
 		    vcp_data.waveform[isweep] == doppler_w_amb_res &&
-		    merging_split_cuts))
+		    merging_split_cuts)){
+
+            free(type_str);
 	    continue;
+        }
 
 	/* Load the data for this field. */
 	if (radar->v[vol_index] == NULL) {
 	    radar->v[vol_index] = RSL_new_volume(MAXSWEEPS);
 	    radar->v[vol_index]->h.f = f;
 	    radar->v[vol_index]->h.invf = invf;
-	    radar->v[vol_index]->h.type_str = type_str; // FIXME: this causes a memory leak, only final type_str is free'd when deallocating volume
+	    radar->v[vol_index]->h.type_str = type_str;
 	}
+        else{
+            free(type_str);
+        }
 	if (radar->v[vol_index]->sweep[isweep] == NULL) {
 	    radar->v[vol_index]->sweep[isweep] = RSL_new_sweep(MAXRAYS_M31);
 	    radar->v[vol_index]->sweep[isweep]->h.f = f;
