@@ -345,6 +345,7 @@ void wsr88d_load_ray_hdr(Wsr88d_ray_m31 *wsr88d_ray, Ray *ray)
     m1_ray.vol_cpat = vcp_data.vcp;
     m1_ray.elev_num = ray_hdr.elev_num;
     m1_ray.unam_rng = (short) (wsr88d_ray->unamb_rng * 10.);
+    m1_ray.nyq_vel = (short) wsr88d_ray->nyq_vel;
     /* Get values from message type 1 routines. */
     ray->h.frequency = wsr88d_get_frequency(&m1_ray);
     ray->h.pulse_width = wsr88d_get_pulse_width(&m1_ray);
@@ -460,7 +461,7 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
 	    radar->v[vol_index] = RSL_new_volume(MAXSWEEPS);
 	    radar->v[vol_index]->h.f = f;
 	    radar->v[vol_index]->h.invf = invf;
-	    radar->v[vol_index]->h.type_str = type_str;
+	    radar->v[vol_index]->h.type_str = type_str; // FIXME: this causes a memory leak, only final type_str is free'd when deallocating volume
 	}
 	if (radar->v[vol_index]->sweep[isweep] == NULL) {
 	    radar->v[vol_index]->sweep[isweep] = RSL_new_sweep(MAXRAYS_M31);
