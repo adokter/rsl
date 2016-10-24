@@ -69,6 +69,10 @@
 #include <string.h>
 #include <unistd.h>
 
+#include <fcntl.h>
+#include <sys/types.h>
+#include <bzlib.h>
+
 #include "wsr88d.h"
 
 static int little_endian(void)
@@ -227,6 +231,34 @@ void wsr88d_print_sweep_info(Wsr88d_sweep *s)
   }
 }
 
+
+// adapted from uncompress_pipe in gzip.c
+FILE *uncompress_pipe_ar2v (FILE *fp)
+{
+  /* Pass the file pointed to by 'fp' through the bzip2 pipe. */
+
+  FILE *fpipe;
+  int save_fd;
+
+  if (no_command("decode_ar2v > /dev/null")){
+    fprintf(stderr, "decode_ar2v not found, aborting ...\n");
+    exit(0);
+    return fp;
+  }
+  save_fd = dup(0);
+  close(0); /* Redirect stdin for gzip. */
+  dup(fileno(fp));
+
+  fpipe = popen("decode_ar2v --stdout", "r");
+  if (fpipe == NULL) perror("uncompress_pipe_ar2v");
+  close(0);
+  dup(save_fd);
+  close(save_fd);
+  fclose(fp);
+  return fpipe;
+}
+
+
 /**********************************************************************/
 /*                                                                    */
 /*  done 2/28             wsr88d_open                                 */
@@ -268,20 +300,20 @@ Wsr88d_file *wsr88d_open(char *filename)
         }
      }
   }
+
+  // reopen the file
+  if ( strcmp(filename, "stdin") == 0 ) {
+     save_fd = dup(0);
+     wf->fptr = fdopen(save_fd,"r");
+  } else {
+     wf->fptr = fopen(filename, "r");
+  }
  
   // decompress
   if(ar2v6bzip){
-     fprintf(stderr,"WSR88D file version AR2V0006.28 or newer, aborting ...\n");
-     exit(0);
+     wf->fptr = uncompress_pipe_ar2v(wf->fptr);
   }
   else{
-     // reopen the file
-     if ( strcmp(filename, "stdin") == 0 ) {
-        save_fd = dup(0);
-        wf->fptr = fdopen(save_fd,"r");
-     } else {
-        wf->fptr = fopen(filename, "r");
-     }
      wf->fptr = uncompress_pipe(wf->fptr);
   }
 

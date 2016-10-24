@@ -4,6 +4,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <bzlib.h>
+#include <unistd.h>
 
 static char *compression_type = "BZIP2";
 
@@ -15,11 +16,11 @@ static void
 	char *av0 /*  id string */
 	  )
 {
-    (void)fprintf(stderr, "Usage: %s <inputfile> <outputfile>\n", av0);
-    exit(1);
+    (void)fprintf(stdout, "Usage: %s [--stdout] <inputfile> [<outputfile>]\n", av0);
+    exit(0);
 }
 
-int main(int argc, char *argv[], char *envp[])
+int main(int argc, char *argv[])
 {
     char clength[4];
     char *block = (char *)malloc(8192), *oblock = (char *)malloc(262144);
@@ -30,25 +31,51 @@ int main(int argc, char *argv[], char *envp[])
      * process command line arguments
      */
 		
-    if (argc < 2) usage(argv[0]);
-		
+    if (argc == 1) usage(argv[0]);
+    
     char *infile = argv[1];
-    char *outfile = argv[2];
-		
-    int fdin = open(infile, O_RDONLY);
+    char *outfile;
+    int fdin;
+    int tostdout = 0;
+    
+    if (argc == 2){
+       if (strcmp(infile, "--stdout") == 0 ){
+          tostdout = 1;
+          fdin = STDIN_FILENO;
+          outfile = NULL;
+       }
+       else{
+          tostdout = 0;
+          fdin = STDIN_FILENO;
+          outfile = infile;
+       }
+    }
+ 
+    if (argc > 2){
+       outfile = argv[2];
+       if (strcmp(infile, "--stdout") == 0 ){
+          tostdout = 1;
+          infile = argv[2];
+          outfile = NULL;
+       }
+       fdin = open(infile, O_RDONLY);
+    }
 		
     if (fdin == -1)
     {
 	fprintf(stderr, "Failed to open input file %s\n", infile);
 	exit(1);
     }
-
-    int fd = open(outfile, O_WRONLY | O_CREAT, 0664);
+    
+    int fd = -1;
+    if(!tostdout){
+        fd = open(outfile, O_WRONLY | O_CREAT, 0664);
 		
-    if (fd == -1)
-    {
-	fprintf(stderr, "Failed to open output file %s\n", outfile);
-	exit(1);				
+        if (fd == -1)
+        {
+            fprintf(stderr, "Failed to open output file %s\n", outfile);
+            exit(1);				
+        }
     }
 
     /*
@@ -91,8 +118,13 @@ int main(int argc, char *argv[], char *envp[])
 	    }
 				
 	    if ( stid[0] != 0 ) memcpy(block+20,stid,4);
-	    lseek(fd, 0, SEEK_SET);
-	    write(fd, block, 24);
+            if(!tostdout){
+	       lseek(fd, 0, SEEK_SET);
+	       write(fd, block, 24);
+            }
+            else{
+               write(STDOUT_FILENO, block, 24);
+            }
 	    continue;
 	}
 
@@ -123,7 +155,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	i = read(fdin, block, length);
 	if (i != length) {
-	    fprintf ( stderr, "Short block read\n");
+	    fprintf ( stderr, "Short block read!\n");
 	    exit(1);
 	}
 	if (length > 10) {
@@ -150,8 +182,12 @@ int main(int argc, char *argv[], char *envp[])
 		fprintf(stderr, "decompress error - %d\n", error);
 		exit(1);
 	    }
-				
-	    write(fd, oblock, olength);
+            if(tostdout){
+                write(STDOUT_FILENO, oblock, olength);
+            }
+            else{				
+                write(fd, oblock, olength);
+            }
 	}
     }
     close(fdin);
