@@ -325,6 +325,7 @@ EXTRA_DIST = CHANGES Copyright GPL LGPL wsr88d_locations.dat rapic.h
 DISTCLEANFILES = rapic.c rapic-lex.c
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+	$(MAKE) -C decode_ar2v
 
 .SUFFIXES:
 .SUFFIXES: .c .l .lo .o .obj .y
@@ -844,6 +845,7 @@ uninstall: uninstall-recursive
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+	$(MAKE) -C decode_ar2v install
 
 installcheck: installcheck-recursive
 install-strip:
