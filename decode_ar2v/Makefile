@@ -1,7 +1,9 @@
 all : decode_ar2v
 
 decode_ar2v: decode_ar2v.c
-	gcc -o decode_ar2v -lbz2 decode_ar2v.c
+	libs=$$(cat ../Makefile | grep "LIBS = " | cut -c 7-); \
+	echo $${libs}; \
+	gcc -o decode_ar2v $${libs} -lbz2 decode_ar2v.c
 
 .PHONY : install
 install : decode_ar2v
