@@ -1,0 +1,25 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(decode_ar2v, v0.1)
+AC_CONFIG_SRCDIR(decode_ar2v.c)
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_LN_S
+
+dnl Checks for header files.
+AC_CHECK_HEADERS(bzlib.h)
+
+dnl Checks for library functions.
+AC_CHECK_LIB(bz2,BZ2_bzBuffToBuffDecompress,,,)
+AC_CHECK_FUNCS(BZ2_bzBuffToBuffDecompress)
+
+dnl Checks for libraries.
+if test $prefix = NONE; then
+  prefix=$ac_default_prefix
+fi
+
+AC_MSG_RESULT(LIBS = $LIBS)
+AC_MSG_RESULT(PREFIX = $prefix)
+AC_MSG_RESULT(INCLUDEDIR = $includedir)
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
