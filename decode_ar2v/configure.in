@@ -12,7 +12,6 @@ AC_CHECK_HEADERS(bzlib.h)
 dnl Checks for library functions.
 AC_CHECK_LIB(bz2,BZ2_bzBuffToBuffDecompress,,,)
 AC_CHECK_FUNCS(BZ2_bzBuffToBuffDecompress)
-AC_CHECK_LIBS([bz2],,,,)
 dnl Checks for libraries.
 if test $prefix = NONE; then
   prefix=$ac_default_prefix
