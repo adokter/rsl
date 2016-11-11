@@ -35,9 +35,9 @@ void wsr88d_remove_sails_sweep(Radar *radar)
     if (nsails > 0) {
         radar = RSL_prune_radar(radar);
          
-        printf("Removed %d SAILS sweep%s.\n", nsails,
+        fprintf(stderr,"Removed %d SAILS sweep%s.\n", nsails,
                 (nsails > 1) ? "s" : "");  /* Thanks K&R */
-        printf("Call RSL_keep_sails() before RSL_anyformat_to_radar() to keep "
+        fprintf(stderr,"Call RSL_keep_sails() before RSL_anyformat_to_radar() to keep "
                 "SAILS sweeps.\n");
     }
 }
