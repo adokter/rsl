@@ -280,12 +280,12 @@ Wsr88d_file *wsr88d_open(char *filename)
   if (wf->fptr == NULL) return NULL;
 
   // first check how the data are compressed by reading first few of magic bytes
-  char magic[13];
+  char magic[32];
   int ar2v6bzip = 0;
   fpos_t pos;
   fgetpos(wf->fptr, &pos);
   if (fread(magic, sizeof(magic), 1, wf->fptr) != 1) {
-     fprintf(stderr,"failed to read first 13 bytes of Wsr88d file");
+     fprintf(stderr,"failed to read first 32 bytes of Wsr88d file");
      return NULL;
   }
   fclose(wf->fptr);
@@ -294,9 +294,11 @@ Wsr88d_file *wsr88d_open(char *filename)
   if (strncmp("AR2V000", magic, 7) == 0){
      int ar2v = magic[7] - '0';
      if(ar2v>=6){
-        int ar2subv = 100*(magic[9] - '0')+10*(magic[10] - '0') + (magic[11] - '0');
-        if(ar2subv>27){
-           ar2v6bzip = 1;
+        // ar2v compressed files seem to have the string "BZh41AY&SY" starting at position 28
+        // FIXME: not tested how general this is
+        if (strncmp("BZh", &magic[28], 3) == 0){
+            //int ar2subv = 100*(magic[9] - '0')+10*(magic[10] - '0') + (magic[11] - '0');
+            ar2v6bzip = 1;
         }
      }
   }
