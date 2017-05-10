@@ -2,7 +2,14 @@
 
 Cloned from http://trmm-fc.gsfc.nasa.gov/trmm_gv/software/rsl/functionality_index.html
 
-Because git does not store original timestamps of files, running a simple `make` results in a call to various autotools to regenerate Makefiles, which causes errors. To compile with original Makefile:
+First compile decode_ar2v decoder:
+```
+cd decode_ar2v
+./configure
+make
+cd ..
+```
+Next we compile RSL library. Because git does not store original timestamps of files, running a simple `make` results in a call to various autotools to regenerate Makefiles, which causes errors. To compile with original Makefile:
 ```
 ./configure
 make AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
