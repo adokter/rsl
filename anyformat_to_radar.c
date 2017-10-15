@@ -59,6 +59,7 @@ enum File_type RSL_filetype(char *infile)
   FILE *fp;
   char magic[11];
 
+  fprintf(stderr,"RSL: reading file %s\n", infile);
   if ((fp = fopen(infile, "r")) == NULL) {
 	perror(infile);
 	return UNKNOWN;
