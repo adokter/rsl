@@ -57,6 +57,7 @@ enum File_type RSL_filetype(char *infile)
    * RAINBOW - First two bytes: decimal 1, followed by 'H'
    */
   FILE *fp;
+  FILE *fp_save;
   char magic[11];
 
   fprintf(stderr,"RSL: reading file %s\n", infile);
@@ -67,14 +68,15 @@ enum File_type RSL_filetype(char *infile)
 
   /* Read the magic bytes. */
   /* HACK HACK XXXX fp = uncompress_pipe(fp);*/ /* If gzip available. */
-  if (fread(magic, sizeof(magic), 1, fp) != 1) {
+  fp_save=fp;
+  if (fread(magic, sizeof(magic), 1, fp_save) != 1) {
 	char *magic_str = (char *)calloc(sizeof(magic)+1, sizeof(char));
 	memcpy(magic_str, magic, sizeof(magic));
 	fprintf(stderr,"Error fread: Magic is %s\n", magic_str);
 	free (magic_str);
 	perror("RSL_filetype");
         /* Thanks to Thiago Biscaro for fixing defunct process problem. */
-        rsl_pclose(fp);
+        rsl_pclose(fp_save);
 	return UNKNOWN;
   }
 
@@ -86,8 +88,8 @@ enum File_type RSL_filetype(char *infile)
   --Thiago Biscaro
   */
 
-  rsl_pclose(fp);
-  
+  // HACK HACK XXXX rsl_pclose(fp);
+
   fprintf(stderr,"RSL: magic string: %s\n", magic);
 
   if (strncmp("ARCHIVE2.", magic, 9) == 0) return WSR88D_FILE;
