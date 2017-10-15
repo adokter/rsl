@@ -88,6 +88,8 @@ enum File_type RSL_filetype(char *infile)
 
   rsl_pclose(fp);
   
+  fprintf(stderr,"RSL: magic string: %s\n", magic);
+
   if (strncmp("ARCHIVE2.", magic, 9) == 0) return WSR88D_FILE;
   if (strncmp("AR2V000", magic, 7) == 0) return WSR88D_FILE;
   if (strncmp("UF", magic, 2) == 0) return UF_FILE;
