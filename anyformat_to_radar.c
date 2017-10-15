@@ -65,7 +65,7 @@ enum File_type RSL_filetype(char *infile)
   }
 
   /* Read the magic bytes. */
-  fp = uncompress_pipe(fp); /* If gzip available. */
+  /* HACK HACK XXXX fp = uncompress_pipe(fp);*/ /* If gzip available. */
   if (fread(magic, sizeof(magic), 1, fp) != 1) {
 	char *magic_str = (char *)calloc(sizeof(magic)+1, sizeof(char));
 	memcpy(magic_str, magic, sizeof(magic));
