@@ -1,6 +1,6 @@
 ## TRMM Radar Software Library (RSL)
 
-Cloned from http://trmm-fc.gsfc.nasa.gov/trmm_gv/software/rsl/functionality_index.html
+Forked from http://trmm-fc.gsfc.nasa.gov/trmm_gv/software/rsl/functionality_index.html
 
 First compile decode_ar2v decoder:
 ```
