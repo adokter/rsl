@@ -357,9 +357,9 @@ NSIG_Ray *nsig_read_ray(FILE *fp, int *nsig_error)
   n = nsig_read_chunk(fp, (char *)chunk);
   /* Size of chunk is n */
 
-  /*if (n == 0) return NULL;*/ /* Silent error. */
+  if (n == 0) return NULL; /* Silent error. */
 
-  if (n <= 0) {
+  if (n < 0) {
     fprintf(stderr, "nsig_read_ray: chunk return code = %d.\n", n);
     *nsig_error = 1;
     return NULL;
@@ -385,11 +385,6 @@ NSIG_Ray *nsig_read_ray(FILE *fp, int *nsig_error)
   printf("               rayh.num_bins = %d (nbins %d, n %d)\n", NSIG_I2(rayh.num_bins), nbins, n);
 #endif
   ray->range = (unsigned char *)calloc(n, sizeof(unsigned char));
-  /* Changed calloc nbins to calloc n for 2-byte data.
-  ray->range = (unsigned char *)calloc(nbins, sizeof(unsigned char));
-  memmove(ray->range, &chunk[sizeof(NSIG_Ray_header)], nbins);
-     Can remove this commented-out code once we know changes work.
-  */
   memmove(ray->range, &chunk[sizeof(NSIG_Ray_header)], n);
   
   return ray;

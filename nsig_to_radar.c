@@ -980,11 +980,7 @@ RSL_nsig_to_radar
 
    radar = RSL_prune_radar(radar);
 
-   if (nsig_error) {
-       fprintf(stderr,"RSL_nsig_to_radar: Ending with error.\n");
-       RSL_free_radar(radar);
-       radar = NULL;
-   }
+   if (nsig_error) fprintf(stderr,"RSL_nsig_to_radar: Ending with error.\n");
 
    /** return radar pointer **/
    return radar;

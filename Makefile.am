@@ -1,6 +1,6 @@
 ## Process w/ automake.  Or, autoreconf; make ##
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = . colors doc examples
+SUBDIRS = . colors doc examples wsr88d_decode_ar2v
 INCLUDES = -I. -I$(srcdir) -I$(prefix)/include -I$(prefix)/toolkit/include
 
 includedir = $(prefix)/include 
@@ -8,7 +8,7 @@ colordir = $(libdir)/colors
 
 lib_LTLIBRARIES = librsl.la
 
-librsl_la_LDFLAGS = -version-info 1:49
+librsl_la_LDFLAGS = -version-info 1:50
 librsl_la_SOURCES = \
 $(rapic_c) $(radtec_c)\
 dorade.c dorade_print.c dorade_to_radar.c\
