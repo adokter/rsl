@@ -1,4 +1,4 @@
-v1.49 (Released 10/16/2015)
+v1.50 (Released March 1, 2017)
 
 This is the README file for the Radar Software Library (RSL).
 
@@ -64,15 +64,6 @@ Intel 386/486/Pentium is an example of a little endian machine.
 Additional software needed for executing RSL code is listed below.
 Note, RSL can be built without TSDIS toolkit and without HDF and
 without PKWARE support.
-
-  pbmplus (Jef Poskanzer) Available via anon ftp to ftp.uu.net.  This is 
-                          used when making GIF, PPM, PBM, PGM, PICT, etc.
-                          images.  Output via pipes.  Required for executing
-                          your RSL application, if you plan to output images.
-                          This is not required when 
-                          linking your application with the RSL.
-
-                          You only need ppmtogif and ppmtopict.
 	
   gcc (GNU cc compiler)   Normal cc or acc (sun) will work.  Not required,
                           but, you do need an ansi compilier.
@@ -84,6 +75,15 @@ without PKWARE support.
   make (GNU make)         GNU make version 3.76. Standard make on SGI
                           IRIX 6.2 doesn't work.  It's a good idea
                           to have GNU make (GNU tar too).
+
+  pbmplus (Jef Poskanzer) Available via anon ftp to ftp.uu.net.  This is 
+                          used when making GIF, PPM, PBM, PGM, PICT, etc.
+                          images.  Output via pipes.  Required for executing
+                          your RSL application, if you plan to output images.
+                          This is not required when 
+                          linking your application with the RSL.
+
+                          You only need ppmtogif and ppmtopict.
 
   PKWARE Data             Version 1.11.  Needed for the RAPIC ingest.
   Compression library.    Call PKWARE, Inc. at 414-354-8699 or via

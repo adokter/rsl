@@ -34,10 +34,9 @@ void wsr88d_remove_sails_sweep(Radar *radar)
     /* Push down the sweeps to remove gaps in radar structure. */
     if (nsails > 0) {
         radar = RSL_prune_radar(radar);
-         
         fprintf(stderr,"Removed %d SAILS sweep%s.\n", nsails,
                 (nsails > 1) ? "s" : "");  /* Thanks K&R */
-        fprintf(stderr,"Call RSL_keep_sails() before RSL_anyformat_to_radar() to keep "
-                "SAILS sweeps.\n");
+        fprintf(stderr,"Call RSL_keep_sails() before RSL_anyformat_to_radar() "
+                "to keep SAILS sweeps.\n");
     }
 }

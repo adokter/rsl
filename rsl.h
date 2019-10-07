@@ -27,7 +27,7 @@
 #include "config.h"
 #endif
 
-#define RSL_VERSION_STR "v1.49"
+#define RSL_VERSION_STR "v1.50"
 
 /**********************************************************************/
 /* Configure: Define USE_TWO_BYTE_PRECISION to have RSL store internal*/
@@ -46,7 +46,7 @@
 /*            so you shouldn't have to modify anything here.          */
 /**********************************************************************/
 #ifndef COLORDIR
-#define COLORDIR "/usr/local/trmm/lib/colors"
+#define COLORDIR "/home/kelley/trmm/lib/colors"
 #endif
 
 /* These are the color table indexes. See RSL_set/get_color_table. */
@@ -200,11 +200,9 @@ typedef struct {
 
 
 typedef struct {
-  int sweep_num;   /* Integer sweep number.  This may be redundant, since
-                    * this will be the same as the Volume.sweep array index.*/
-  float elev;      /* Elevation angle (mean) for the sweep. Value is -999 for
-                    * RHI. */
-  float azimuth;   /* Azimuth for the sweep (RHI). Value is -999 for PPI. */
+  int sweep_num;   /* Integer sweep number. */
+  float elev;      /* Elevation angle for sweep. Value is -999 for RHI. */
+  float azimuth;   /* Azimuth for RHI. Value is -999 for PPI. */
   float beam_width;  /* This is in the ray header too. */
   float vert_half_bw;  /* Vertical beam width divided by 2 */
   float horz_half_bw;  /* Horizontal beam width divided by 2 */
@@ -229,7 +227,6 @@ typedef struct {
 
 typedef struct {
     Volume_header h;           /* Specific info for each elev. */
-                               /* Includes resolution: km/bin. */
     Sweep **sweep;             /* sweep[0..nsweeps-1]. */
 } Volume;
 

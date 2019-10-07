@@ -1,9 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(rsl, v1.49)
+AC_INIT(rsl, v1.50)
 AC_CONFIG_SRCDIR(volume.c)
 
 AM_INIT_AUTOMAKE
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h)
 
 dnl Default for GVS and friends.
 AC_PREFIX_DEFAULT(/usr/local/trmm)
@@ -40,7 +40,7 @@ if test $prefix = NONE; then
   prefix=$ac_default_prefix
 fi
 LIBDIR="-L$prefix/lib"
-LIBS="-lz -lm"
+LIBS="-lz -lm -lbz2"
 
 # The order of the libraries is important.
 # This works:
@@ -86,5 +86,6 @@ if test "$YYWRAP" = ""; then
 fi
 
 AC_MSG_RESULT(LIBS = $LIBS)
-AC_CONFIG_FILES([Makefile colors/Makefile doc/Makefile examples/Makefile])
+AC_CONFIG_FILES([Makefile colors/Makefile doc/Makefile examples/Makefile 
+		 wsr88d_decode_ar2v/Makefile])
 AC_OUTPUT

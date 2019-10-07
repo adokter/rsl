@@ -391,7 +391,6 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
     float (*f)(Range x);
     Ray *ray;
     int vol_index, waveform;
-    char *type_str;
 
     extern int rsl_qfield[]; /* See RSL_select_fields in volume.c */
 
@@ -427,18 +426,12 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
 	if (!rsl_qfield[vol_index]) continue;
 
 	switch (vol_index) {
-	    case DZ_INDEX: f = DZ_F; invf = DZ_INVF;
-		 type_str = strdup("Reflectivity"); break;
-	    case VR_INDEX: f = VR_F; invf = VR_INVF;
-		 type_str = strdup("Velocity"); break;
-	    case SW_INDEX: f = SW_F; invf = SW_INVF;
-		 type_str = strdup("Spectrum width"); break;
-	    case DR_INDEX: f = DR_F; invf = DR_INVF;
-		 type_str = strdup("Differential Reflectivity"); break;
-	    case PH_INDEX: f = PH_F; invf = PH_INVF;
-		 type_str = strdup("Differential Phase (PhiDP)"); break;
-	    case RH_INDEX: f = RH_F; invf = RH_INVF;
-		 type_str = strdup("Correlation Coefficient (RhoHV)"); break;
+	    case DZ_INDEX: f = DZ_F; invf = DZ_INVF; break;
+	    case VR_INDEX: f = VR_F; invf = VR_INVF; break;
+	    case SW_INDEX: f = SW_F; invf = SW_INVF; break;
+	    case DR_INDEX: f = DR_F; invf = DR_INVF; break;
+	    case PH_INDEX: f = PH_F; invf = PH_INVF; break;
+	    case RH_INDEX: f = RH_F; invf = RH_INVF; break;
 	}
 
 	waveform = vcp_data.waveform[isweep];
@@ -453,22 +446,39 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
 	 */
 	if (vol_index == DZ_INDEX && (vcp_data.surveil_prf_num[isweep] == 0 &&
 		    vcp_data.waveform[isweep] == doppler_w_amb_res &&
-		    merging_split_cuts)){
-
-            free(type_str);
+		    merging_split_cuts))
 	    continue;
-        }
 
 	/* Load the data for this field. */
 	if (radar->v[vol_index] == NULL) {
 	    radar->v[vol_index] = RSL_new_volume(MAXSWEEPS);
 	    radar->v[vol_index]->h.f = f;
 	    radar->v[vol_index]->h.invf = invf;
-	    radar->v[vol_index]->h.type_str = type_str;
+            switch (vol_index) {
+                case DZ_INDEX:
+                    radar->v[vol_index]->h.type_str = strdup("Reflectivity");
+                    break;
+                case VR_INDEX:
+                    radar->v[vol_index]->h.type_str = strdup("Velocity");
+                    break;
+                case SW_INDEX:
+                    radar->v[vol_index]->h.type_str = strdup("Spectrum width");
+                    break;
+                case DR_INDEX:
+                    radar->v[vol_index]->h.type_str = strdup("Differential "
+                        "Reflectivity");
+                    break;
+                case PH_INDEX:
+                    radar->v[vol_index]->h.type_str = strdup("Differential "
+                        "Phase (PhiDP)");
+                    break;
+                case RH_INDEX:
+                    radar->v[vol_index]->h.type_str = strdup("Correlation "
+                        "Coefficient (RhoHV)");
+                    break;
+            }
+	   
 	}
-        else{
-            free(type_str);
-        }
 	if (radar->v[vol_index]->sweep[isweep] == NULL) {
 	    radar->v[vol_index]->sweep[isweep] = RSL_new_sweep(MAXRAYS_M31);
 	    radar->v[vol_index]->sweep[isweep]->h.f = f;
