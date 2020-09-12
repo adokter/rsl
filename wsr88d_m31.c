@@ -479,6 +479,10 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
                     radar->v[vol_index]->h.type_str = strdup("Correlation "
                         "Coefficient (RhoHV)");
                     break;
+                case DC_INDEX:
+                    radar->v[vol_index]->h.type_str = strdup("Clutter "
+                        "Filter Power removed (CFP)");
+                    break;
             }
 	   
 	}
