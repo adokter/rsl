@@ -357,12 +357,14 @@ void wsr88d_load_ray_hdr(Wsr88d_ray_m31 *wsr88d_ray, Ray *ray)
 
 int wsr88d_get_vol_index(char* dataname)
 {
+
     if (strncmp(dataname, "DREF", 4) == 0) return DZ_INDEX;
     if (strncmp(dataname, "DVEL", 4) == 0) return VR_INDEX;
     if (strncmp(dataname, "DSW",  3) == 0) return SW_INDEX;
     if (strncmp(dataname, "DZDR", 4) == 0) return DR_INDEX;
     if (strncmp(dataname, "DPHI", 4) == 0) return PH_INDEX;
     if (strncmp(dataname, "DRHO", 4) == 0) return RH_INDEX;
+    if (strncmp(dataname, "DCFP", 4) == 0) return DC_INDEX;
 
     return -1;
 }
@@ -400,6 +402,7 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
     int merging_split_cuts;
 
     merging_split_cuts =  wsr88d_merge_split_cuts_is_set();
+    // FIXME: on newer radar data nfields is too large, causing for loop below to access unallocated memory
     nfields = wsr88d_ray->ray_hdr.data_block_count - nconstblocks;
     field_offset = (int *) &wsr88d_ray->ray_hdr.radial_const;
     do_swap = little_endian();
