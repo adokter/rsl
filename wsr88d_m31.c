@@ -78,6 +78,7 @@ typedef struct {
     unsigned int field4;
     unsigned int field5;
     unsigned int field6;
+    unsigned int cfp_const;
 } Ray_header_m31;  /* Called Data Header Block in RDA/RPG document. */
 
 typedef struct {
