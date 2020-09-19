@@ -405,10 +405,10 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
     merging_split_cuts =  wsr88d_merge_split_cuts_is_set();
     // FIXME: on newer radar data nfields is too large, causing for loop below to access unallocated memory
     nfields = wsr88d_ray->ray_hdr.data_block_count - nconstblocks;
+    if(nfields > 6) nfields=6; /* this effectively skips reading of CFP data FIXME */
     field_offset = (int *) &wsr88d_ray->ray_hdr.radial_const;
     do_swap = little_endian();
     iray = wsr88d_ray->ray_hdr.azm_num - 1;
-
     for (ifield=0; ifield < nfields; ifield++) {
 	field_offset++;
 	data_index = *field_offset;
