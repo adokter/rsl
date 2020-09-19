@@ -46,7 +46,7 @@
 /*            so you shouldn't have to modify anything here.          */
 /**********************************************************************/
 #ifndef COLORDIR
-#define COLORDIR "/home/kelley/trmm/lib/colors"
+#define COLORDIR "/opt/local/lib/colors"
 #endif
 
 /* These are the color table indexes. See RSL_set/get_color_table. */
@@ -495,7 +495,7 @@ typedef struct {
  * rsl_qfield by adding a '1' for each new volume index.
  */
 
-#define MAX_RADAR_VOLUMES 47
+#define MAX_RADAR_VOLUMES 48
 
 #define DZ_INDEX 0
 #define VR_INDEX 1
@@ -544,7 +544,7 @@ typedef struct {
 #define TV_INDEX 44
 #define ZV_INDEX 45
 #define SN_INDEX 46
-
+#define DC_INDEX 47
 
 /* Prototypes for functions. */
 /* Alphabetical and grouped by object returned. */
@@ -858,7 +858,7 @@ static char *RSL_ftype[] = {"DZ", "VR", "SW", "CZ", "ZT", "DR",
                             "SQ", "VS", "VL", "VG", "VT", "NP",
                             "HC", "VC", "V2", "S2", "V3", "S3",
                             "CR", "CC", "PR", "SD", "ZZ", "RD",
-                            "ET", "EZ", "TV", "ZV", "SN"};
+                            "ET", "EZ", "TV", "ZV", "SN", "DC"};
 
 static  float (*RSL_f_list[])(Range x) = {DZ_F, VR_F, SW_F, CZ_F, ZT_F, DR_F,
                                           LR_F, ZD_F, DM_F, RH_F, PH_F, XZ_F,
@@ -867,7 +867,7 @@ static  float (*RSL_f_list[])(Range x) = {DZ_F, VR_F, SW_F, CZ_F, ZT_F, DR_F,
                                           SQ_F, VS_F, VL_F, VG_F, VT_F, NP_F,
                                           HC_F, VC_F, VR_F, SW_F, VR_F, SW_F,
                                           DZ_F, CZ_F, PH_F, SD_F, DZ_F, DZ_F,
-                                          ZT_F, DZ_F, ZT_F, DZ_F, SN_F};
+                                          ZT_F, DZ_F, ZT_F, DZ_F, SN_F, DZ_F};
 
 static  Range (*RSL_invf_list[])(float x)
          = {DZ_INVF, VR_INVF, SW_INVF, CZ_INVF, ZT_INVF, DR_INVF, 
@@ -877,7 +877,7 @@ static  Range (*RSL_invf_list[])(float x)
             SQ_INVF, VS_INVF, VL_INVF, VG_INVF, VT_INVF, NP_INVF,
             HC_INVF, VC_INVF, VR_INVF, SW_INVF, VR_INVF, SW_INVF,
             DZ_INVF, CZ_INVF, PH_INVF, SD_INVF, DZ_INVF, DZ_INVF,
-            ZT_INVF, DZ_INVF, ZT_INVF, DZ_INVF, SN_INVF};
+            ZT_INVF, DZ_INVF, ZT_INVF, DZ_INVF, SN_INVF, DZ_INVF};
 #endif
 /* Secret routines that are quite useful and useful to developers. */
 void radar_load_date_time(Radar *radar);
