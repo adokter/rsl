@@ -57,10 +57,8 @@ enum File_type RSL_filetype(char *infile)
    * RAINBOW - First two bytes: decimal 1, followed by 'H'
    */
   FILE *fp;
-  FILE *fp_save;
   char magic[11];
 
-  fprintf(stderr,"RSL: reading file %s\n", infile);
   if ((fp = fopen(infile, "r")) == NULL) {
 	perror(infile);
 	return UNKNOWN;
@@ -75,7 +73,7 @@ enum File_type RSL_filetype(char *infile)
 	free (magic_str);
 	perror("RSL_filetype");
         /* Thanks to Thiago Biscaro for fixing defunct process problem. */
-        rsl_pclose(fp_save);
+        rsl_pclose(fp);
 	return UNKNOWN;
   }
 
@@ -87,10 +85,8 @@ enum File_type RSL_filetype(char *infile)
   --Thiago Biscaro
   */
 
-  // HACK HACK XXXX rsl_pclose(fp);
-
-  fprintf(stderr,"RSL: magic string: %s\n", magic);
-
+  rsl_pclose(fp);
+  
   if (strncmp("ARCHIVE2.", magic, 9) == 0) return WSR88D_FILE;
   if (strncmp("AR2V000", magic, 7) == 0) return WSR88D_FILE;
   if (strncmp("UF", magic, 2) == 0) return UF_FILE;
