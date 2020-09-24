@@ -1,6 +1,15 @@
 /* Changes for RSL
  *
  *---------------------------------------------------------------------
+ * v1.50 Released March 1, 2017
+ * 1. nsig.c (nsig_read_ray), nsig_to_radar.c: Minor bug fix in the handling
+ *    of errors in Sigmet data compression codes.
+ * 2. wsr88d_merge_split_cuts.c (wsr88d_remove_extra_refl): Fixed bug that
+ *    caused segmentation fault if DZ volume is null.  Thanks to Dan Sheldon.
+ * 3. Thanks to Adriaan Dokter for the the following:
+ *    wsr88d.c: Handle files that use custom block BZip2 internal compression.
+ *    wsr88d_m31.c (wsr88d_load_ray_into_radar): Fixed memory leak.
+ *---------------------------------------------------------------------
  * v1.49 Released 10/16/2015
  * 1. wsr88d_merge_split_cuts.c (wsr88d_move_vcp121_extra_velsweeps): Fixed bug
  *    that caused segmentation fault if ingest function was called more than

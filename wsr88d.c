@@ -5,17 +5,14 @@
             John H. Merritt
             Space Applications Corporation
             Vienna, Virginia
-
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
     License as published by the Free Software Foundation; either
     version 2 of the License, or (at your option) any later version.
-
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
     Library General Public License for more details.
-
     You should have received a copy of the GNU Library General Public
     License along with this library; if not, write to the Free
     Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -240,16 +237,15 @@ FILE *uncompress_pipe_ar2v (FILE *fp)
   FILE *fpipe;
   int save_fd;
 
-  if (no_command("decode_ar2v > /dev/null")){
-    fprintf(stderr, "decode_ar2v not found, aborting ...\n");
-    exit(0);
+  if (no_command("wsr88d_decode_ar2v > /dev/null")){
+    fprintf(stderr, "wsr88d_decode_ar2v not found, aborting ...\n");
     return fp;
   }
   save_fd = dup(0);
   close(0); /* Redirect stdin for gzip. */
   dup(fileno(fp));
 
-  fpipe = popen("decode_ar2v --stdout", "r");
+  fpipe = popen("wsr88d_decode_ar2v --stdout", "r");
   if (fpipe == NULL) perror("uncompress_pipe_ar2v");
   close(0);
   dup(save_fd);
@@ -280,28 +276,23 @@ Wsr88d_file *wsr88d_open(char *filename)
   if (wf->fptr == NULL) return NULL;
 
   // first check how the data are compressed by reading first few of magic bytes
-  char magic[32];
+  char hdrplus4[28];
+  char bzmagic[4];
   int ar2v6bzip = 0;
   fpos_t pos;
   fgetpos(wf->fptr, &pos);
-  if (fread(magic, sizeof(magic), 1, wf->fptr) != 1) {
-     fprintf(stderr,"failed to read first 32 bytes of Wsr88d file");
+  if (fread(hdrplus4, sizeof(hdrplus4), 1, wf->fptr) != 1) {
+     fprintf(stderr,"failed to read first 28 bytes of Wsr88d file");
      return NULL;
   }
-  fclose(wf->fptr);
-
-  // test whether the data are before or after version ar2v0006.27
-  if (strncmp("AR2V000", magic, 7) == 0){
-     int ar2v = magic[7] - '0';
-     if(ar2v>=6){
-        // ar2v compressed files seem to have the string "BZh41AY&SY" starting at position 28
-        // FIXME: not tested how general this is
-        if (strncmp("BZh", &magic[28], 3) == 0){
-            //int ar2subv = 100*(magic[9] - '0')+10*(magic[10] - '0') + (magic[11] - '0');
-            ar2v6bzip = 1;
-        }
-     }
+  if (fread(bzmagic, sizeof(bzmagic), 1, wf->fptr) != 1) {
+     fprintf(stderr,"failed to read bzip magic bytes from Wsr88d file");
+     return NULL;
   }
+  // test for bzip2 magic.
+  if (strncmp("BZ",bzmagic,2) == 0) ar2v6bzip = 1;
+
+  fclose(wf->fptr);
 
   // reopen the file
   if ( strcmp(filename, "stdin") == 0 ) {
@@ -1048,4 +1039,3 @@ float wsr88d_get_frequency(Wsr88d_ray *ray)
     freq = (c / wsr88d_get_wavelength(ray)) * 1.0e-9;
   return freq;
 }
-

@@ -1,11 +1,10 @@
 ## TRMM Radar Software Library (RSL)
 
-Cloned from http://trmm-fc.gsfc.nasa.gov/trmm_gv/software/rsl/functionality_index.html
+Forked from http://trmm-fc.gsfc.nasa.gov/trmm_gv/software/rsl/functionality_index.html
 
-Because git does not store original timestamps of files, running a simple `make` results in a call to various autotools to regenerate Makefiles, which causes errors. To compile with original Makefile:
+To compile:
 ```
-./configure
-make AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
-make install AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
+./configure --prefix=/your/install/directory
+make
+sudo make install
 ```
-or untar [rsl-v1.49.tar](https://github.com/adokter/rsl/blob/master/rsl-v1.49.tar) locally to preserve timestamps

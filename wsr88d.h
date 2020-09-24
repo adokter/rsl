@@ -7,7 +7,7 @@
  * The directory should be the same as the LIBDIR in the makefile.
  */
 #ifndef WSR88D_SITE_INFO_FILE
-#define WSR88D_SITE_INFO_FILE "/usr/local/trmm/lib/wsr88d_locations.dat"
+#define WSR88D_SITE_INFO_FILE "/opt/local/lib/wsr88d_locations.dat"
 #endif
 /*===============================================================*/
 typedef struct {

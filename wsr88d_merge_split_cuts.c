@@ -25,14 +25,17 @@ int wsr88d_merge_split_cuts_is_set()
 
 void wsr88d_remove_extra_refl(Radar *radar)
 {
-    /* This function removes any extra reflectivity for an elevation angle.
-     * I.e., only keep reflectivity from the surveillance sweep of a split cut.
+    /* This function removes reflectivity from all velocity sweeps in the split
+     * cut, keeping it in the surveillance sweep only.
      */
 
     int i;
-    float prev_elev;
+    float prev_elev = 0.0;
 
-    prev_elev = radar->v[DZ_INDEX]->sweep[0]->h.elev;
+    if (radar->v[DZ_INDEX] == NULL) return;
+
+    if (radar->v[DZ_INDEX]->sweep[0] != NULL)
+      prev_elev = radar->v[DZ_INDEX]->sweep[0]->h.elev;
 
     for (i=1; i < radar->v[DZ_INDEX]->h.nsweeps; i++) {
         if (radar->v[DZ_INDEX]->sweep[i]) {
