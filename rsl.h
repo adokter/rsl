@@ -46,7 +46,7 @@
 /*            so you shouldn't have to modify anything here.          */
 /**********************************************************************/
 #ifndef COLORDIR
-#define COLORDIR "/opt/local/lib/colors"
+#define COLORDIR "/usr/local/trmm/lib/colors"
 #endif
 
 /* These are the color table indexes. See RSL_set/get_color_table. */
