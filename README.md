@@ -5,6 +5,6 @@ Forked from http://trmm-fc.gsfc.nasa.gov/trmm_gv/software/rsl/functionality_inde
 To compile:
 ```
 ./configure --prefix=/your/install/directory
-make
-sudo make install
+make AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
+sudo make install AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
 ```
