@@ -758,6 +758,7 @@ int no_command (char *cmd);
 FILE *uncompress_pipe (FILE *fp);
 FILE *compress_pipe (FILE *fp);
 int rsl_pclose(FILE *fp);
+enum File_type RSL_filetype(char *infile);
 
 /* Carpi image generation functions. These are modified clones of the
      corresponding sweep image generation functions.
