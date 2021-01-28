@@ -2203,3 +2203,7 @@ int rapicwrap(char *s)
   return 1;
 }
 
+int yywrap(char *s)
+{ 
+  return 1;
+}
