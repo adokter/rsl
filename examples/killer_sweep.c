@@ -6,6 +6,10 @@
 
 #include "rsl.h"
 #include <stdlib.h>
+
+/* Exists in volume.c */
+int SWEEP_INDEX(Sweep *s);
+
 void print_link_list(Azimuth_hash *list)
 {
   if (list == NULL) {

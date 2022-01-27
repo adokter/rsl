@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "rsl.h"
 
+/* Exists in volume.c */
+int SWEEP_INDEX(Sweep *s);
+
 /*
  * Cannot compile if the hash table is static in volume.c.  For
  * testing we make it globally known.
