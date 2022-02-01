@@ -58,6 +58,11 @@
 #define FALSE 0
 #define EMPTY -1.0
 
+/* exists in endian.c */
+int little_endian(void);
+
+/* exists in endian.c */
+void swap_2_bytes(void *word);
 
 /* Fixed elevation angles for Mcgill sweeps. */
 static float elev_angle[3][24] = 
