@@ -26,10 +26,6 @@
 #include <string.h>
 #include "rsl.h"
 #include "rainbow.h"
-#include <unistd.h>
-
-/* Exists in rainbow.c but not in .h */
-void read_rainbow_header(Rainbow_hdr *rainbow_header, FILE *fp);
 
 struct dms {
     int deg;
