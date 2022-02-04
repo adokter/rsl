@@ -40,6 +40,8 @@ void free_and_clear_sweep(Wsr88d_sweep *wsr88d_sweep, int x, int n);
  */
 Volume *copy_sweeps_into_volume(Volume *new_volume, Volume *old_volume);
 
+/* Exists in file wsr88d_remove_sails_sweep.c */
+void wsr88d_remove_sails_sweep(Radar *radar);
 
 Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf);
 
