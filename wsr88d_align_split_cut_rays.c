@@ -103,7 +103,7 @@ int get_azimuth_match(Sweep *sweep1, Sweep *sweep2, int *iray1, int *iray2)
 
     Ray *ray2;
     float matchlimit;
-    const notfound = 0, found = 1;
+    const int notfound = 0, found = 1;
 
     matchlimit = sweep2->h.horz_half_bw;
     /* Assure that matchlimit is wide enough--a problem with pre-Build10. */
@@ -136,7 +136,7 @@ static int get_first_azimuth_match(Sweep *dzsweep, Sweep *vrsweep,
 
     Ray *dz_ray, *vr_ray;
     int iray_dz = 0, iray_vr = 0, match_found = 0;
-    const notfound = 0, found = 1;
+    const int notfound = 0, found = 1;
 
     /* Get first non-null DZ ray. */
     while (dzsweep->ray[iray_dz] == NULL && iray_dz < dzsweep->h.nrays)
@@ -184,7 +184,7 @@ static void remove_excess_rays(Radar *radar, int iswp)
      * reflectivity and dual-pol fields in current sweep.
      */
     int volindex[4] = {DZ_INDEX, DR_INDEX, PH_INDEX, RH_INDEX};
-    const nvols = 4;
+    const int nvols = 4;
     int i, ivol, j, nrays_vr, nrays_this_field;
 
     /* This function is only for legacy beam width. */
