@@ -30,7 +30,7 @@ Sweep *load_sweep(Sweep *s)
 }
 
 
-main (int argc, char **argv)
+void main (int argc, char **argv)
 {
 
   Radar *new_radar, *tmp_radar, *radar;

@@ -35,7 +35,7 @@ void process_args(int argc, char **argv,
 }
 
 
-main (int argc, char **argv)
+void main (int argc, char **argv)
 {
 
   Radar *radar;
