@@ -8,13 +8,13 @@
 
 int qprint_ray;
 
-usage(char **argv)
+void usage(char **argv)
 {
   fprintf(stderr,"Usage: %s [-v] [-f nexrad_id] [infile]\n", argv[0]);
   exit(-1);
 }
 
-process_args(int argc, char **argv,
+void process_args(int argc, char **argv,
 			 char **in_file, int *qprint_ray,
 			 char **site)
 {

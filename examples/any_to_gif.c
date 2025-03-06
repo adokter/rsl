@@ -43,7 +43,7 @@ int usage(char **argv)
   fprintf(stderr, "       -b x = Make black for dbz below x. Default = 0 (no action).\n");
   exit(-1);
 }
-process_args(int argc, char **argv,
+void process_args(int argc, char **argv,
 			 char **in_file, char **callid, int *verbose, int *wholevolume,
 			 int *xdim, float *range, int *dbz_black)
 {

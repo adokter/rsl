@@ -11,13 +11,13 @@
 #include <string.h>
 #include "rsl.h"
 
-usage(int argc, char **argv)
+void usage(int argc, char **argv)
 {
   fprintf(stderr,"Usage: %s infile [firstfile | callid]\n", argv[0]);
   exit(-1);
 }
 
-process_args(int argc, char **argv,
+void process_args(int argc, char **argv,
 			 char **in_file, char **out_file)
 {
  

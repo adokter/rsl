@@ -25,13 +25,13 @@
 #include "rsl.h"
 
 
-usage()
+void usage()
 {
   fprintf(stderr,"Usage: wsr_hist_uf_test infile [-s site_id]\n");
   exit(-1);
 }
 
-process_args(int argc, char **argv, char **in_file, char **site)
+void process_args(int argc, char **argv, char **in_file, char **site)
 {
   int c;
   
