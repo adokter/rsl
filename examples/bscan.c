@@ -17,13 +17,13 @@
 
 #include "rsl.h"
 
-usage()
+void usage()
 {
   fprintf(stderr,"Usage: bscan infile [callid]\n");
   exit(-1);
 }
 
-process_args(int argc, char **argv,
+void process_args(int argc, char **argv,
 			 char **in_file, char **callid)
 {
  
@@ -38,7 +38,7 @@ process_args(int argc, char **argv,
 }
 
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *infile, *callid;
 

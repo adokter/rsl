@@ -12,7 +12,7 @@ void usage(char **argv)
   exit(-1);
 }
 
-process_args(int argc, char **argv,
+void process_args(int argc, char **argv,
 			 char **in_file, char **out_file, char **first_file)
 {
   int c;
@@ -35,7 +35,7 @@ process_args(int argc, char **argv,
 }
 
 
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
 
   Radar *radar;

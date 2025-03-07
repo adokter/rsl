@@ -382,7 +382,7 @@ void wsr88d_load_ray_into_radar(Wsr88d_ray_m31 *wsr88d_ray, int isweep,
     int *field_offset;
     int ifield, nfields;
     int iray;
-    const nconstblocks = 3;
+    const int nconstblocks = 3;
 
     Data_moment_hdr data_hdr;
     int ngates, do_swap;
