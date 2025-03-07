@@ -46,7 +46,7 @@ void process_args(int argc, char **argv, char **in_file, char **site)
 }
 
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *infile;
   char *site = NULL;

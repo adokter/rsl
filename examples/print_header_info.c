@@ -120,7 +120,7 @@ void print_header_for_volume(Volume *v)
 }
 
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *infile;
 
