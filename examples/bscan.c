@@ -38,7 +38,7 @@ void process_args(int argc, char **argv,
 }
 
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *infile, *callid;
 
