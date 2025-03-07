@@ -47,7 +47,7 @@ void make_pathname(char *filename, char *dir, char *pathname)
 /***********************************************************************/
 /*** DBW ***************************************************************/
 /***********************************************************************/
-main(int argc, char **argv) {
+int main(int argc, char **argv) {
 
     Radar       *radar;
     Volume      *dz_volume, *vr_volume;
@@ -80,7 +80,7 @@ main(int argc, char **argv) {
     char        tape_id[100];
     char        in_file[100], site_id[100];
     char        filename[100], outfile[100], nexfile[100];
-    char        command[100], file_prefix[100], file_suffix[3];
+    char        command[100], file_prefix[100], file_suffix[4];
     char        dir_string[100], red[120], grn[120], blu[120];
     char        time_string[14], site_string[10],img_base[20];
     char        pathname[256], gifdir[100], pgmdir[100], ufdir[100];
