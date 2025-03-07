@@ -284,10 +284,16 @@ int read_wsr88d_ray_m31(Wsr88d_file *wf, int msg_size,
 
     /* Read wsr88d ray. */
 
-    n = fread(wsr88d_ray->data, msg_size, 1, wf->fptr);
-    if (n < 1) {
-	fprintf(stderr,"read_wsr88d_ray_m31: Read failed.\n");
-	return 0;
+    if (feof(wf->fptr) != 0){
+        fprintf(stderr,"read_wsr88d_ray_m31: unexpected end of file, read failed.\n");
+        return 0;
+    }
+    else{
+        n = fread(wsr88d_ray->data, msg_size, 1, wf->fptr);
+        if (n < 1) {
+	    fprintf(stderr,"read_wsr88d_ray_m31: Read failed.\n");
+	    return 0;
+        }
     }
 
     /* Copy data header block to ray header structure. */
