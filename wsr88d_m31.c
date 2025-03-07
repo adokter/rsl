@@ -594,6 +594,7 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 	    n = read_wsr88d_ray_m31(wf, msg_size, &wsr88d_ray);
 	    if (n <= 0) {
                 RSL_free_radar(radar);
+                fprintf(stderr,"Error: could not read ray.\n")
                 return NULL;
             }
 	    raynum = wsr88d_ray.ray_hdr.azm_num;
