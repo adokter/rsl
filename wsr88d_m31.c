@@ -284,7 +284,7 @@ int read_wsr88d_ray_m31(Wsr88d_file *wf, int msg_size,
 
     /* Read wsr88d ray. */
     if(msg_size > MAX_RADIAL_LENGTH){
-        fprintf(stderr,"read_wsr88d_ray_m31: requested ray message read exceeds maximum length.")
+        fprintf(stderr,"read_wsr88d_ray_m31: requested ray message read exceeds maximum length.");
         return 0;
     }
     n = fread(wsr88d_ray->data, msg_size, 1, wf->fptr);
