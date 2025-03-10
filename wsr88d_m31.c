@@ -282,26 +282,12 @@ int read_wsr88d_ray_m31(Wsr88d_file *wf, int msg_size,
     int n;
     float nyq_vel, unamb_rng;
 
-
-    // Get the remaining size from the current position
-    long remaining_size = get_remaining_file_size(file);
-
-    if (remaining_size < 0) {
-        printf("Error calculating remaining file size.\n");
-    }
-
     /* Read wsr88d ray. */
 
-    if (feof(wf->fptr) != 0){
-        fprintf(stderr,"read_wsr88d_ray_m31: unexpected end of file, read failed.\n");
+    n = fread(wsr88d_ray->data, msg_size, 1, wf->fptr);
+    if (n < 1) {
+        fprintf(stderr,"read_wsr88d_ray_m31: Read failed.\n");
         return 0;
-    }
-    else{
-        n = fread(wsr88d_ray->data, msg_size, 1, wf->fptr);
-        if (n < 1) {
-	    fprintf(stderr,"read_wsr88d_ray_m31: Read failed.\n");
-	    return 0;
-        }
     }
 
     /* Copy data header block to ray header structure. */
@@ -614,7 +600,7 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
         END_VOS};
 
     // determine the file size in bytes
-    long remaining_size = get_remaining_file_size(wf);
+    long remaining_size = get_remaining_file_size(wf->fptr);
 
     /* Message type 31 is a variable length message.  All other types consist of
      * 1 or more segments of length 2432 bytes.  To handle all types, we read
