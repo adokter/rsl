@@ -653,6 +653,8 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 		fprintf(stderr,"Current sweep index: %d\n"
 			"Last ray read: %d\n", isweep, prev_raynum);
 		wsr88d_load_sweep_header(radar, isweep);
+                // set vcp to zero, because no valid read
+                radar->h.vcp = 0;
 		return radar;
 	    }
 	    if (msghdr.msg_type == 5) {
