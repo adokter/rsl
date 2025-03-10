@@ -625,7 +625,7 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 
     bzero(&msghdr, sizeof(msghdr));
     remaining_size -= sizeof(Wsr88d_msg_hdr);
-    if(remaining_size>0){
+    if (remaining_size > 0) {
         n = fread(&msghdr, sizeof(Wsr88d_msg_hdr), 1, wf->fptr);
     }
     else{
@@ -703,8 +703,8 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 	    }
 	}
 	else { /* msg_type not 31 */
-            remaining_size -= sizeof(non31_seg_remainder)
-            if(remaining_size>0){
+            remaining_size -= sizeof(non31_seg_remainder);
+            if(remaining_size > 0){
 	        n = fread(&non31_seg_remainder, sizeof(non31_seg_remainder), 1,
 		        wf->fptr);
             }
@@ -732,7 +732,7 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 	/* If not at end of volume scan, read next message header. */
 	if (wsr88d_ray.ray_hdr.radial_status != END_VOS) {
             remaining_size -= sizeof(Wsr88d_msg_hdr);
-            if(remaining_size>0){
+            if(remaining_size > 0){
 	        n = fread(&msghdr, sizeof(Wsr88d_msg_hdr), 1, wf->fptr);
             }
             else{
