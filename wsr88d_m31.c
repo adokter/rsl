@@ -282,6 +282,14 @@ int read_wsr88d_ray_m31(Wsr88d_file *wf, int msg_size,
     int n;
     float nyq_vel, unamb_rng;
 
+
+    // Get the remaining size from the current position
+    long remaining_size = get_remaining_file_size(file);
+
+    if (remaining_size < 0) {
+        printf("Error calculating remaining file size.\n");
+    }
+
     /* Read wsr88d ray. */
 
     if (feof(wf->fptr) != 0){
@@ -559,6 +567,40 @@ void wsr88d_load_sweep_header(Radar *radar, int isweep)
 }
 
 
+long get_remaining_file_size(FILE *file) {
+    // Get the current position
+    long current_pos = ftell(file);
+    if (current_pos == -1) {
+        perror("ftell failed");
+        return -1; // Error case
+    }
+
+    // Seek to the end of the file
+    if (fseek(file, 0, SEEK_END) != 0) {
+        perror("fseek to end failed");
+        return -1; // Error case
+    }
+
+    // Get the position at the end of the file (total file size)
+    long end_pos = ftell(file);
+    if (end_pos == -1) {
+        perror("ftell failed at end");
+        return -1; // Error case
+    }
+
+    // Restore the file pointer to its original position
+    if (fseek(file, current_pos, SEEK_SET) != 0) {
+        perror("fseek to restore position failed");
+        return -1; // Error case
+    }
+
+    // Calculate and return the remaining size
+    return end_pos - current_pos;
+}
+
+
+
+
 Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 {
     Wsr88d_msg_hdr msghdr;
@@ -571,6 +613,8 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
     enum radial_status {START_OF_ELEV, INTERMED_RADIAL, END_OF_ELEV, BEGIN_VOS,
         END_VOS};
 
+    // determine the file size in bytes
+    long remaining_size = get_remaining_file_size(wf);
 
     /* Message type 31 is a variable length message.  All other types consist of
      * 1 or more segments of length 2432 bytes.  To handle all types, we read
@@ -580,7 +624,13 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
      */
 
     bzero(&msghdr, sizeof(msghdr));
-    n = fread(&msghdr, sizeof(Wsr88d_msg_hdr), 1, wf->fptr);
+    remaining_size -= sizeof(Wsr88d_msg_hdr);
+    if(remaining_size>0){
+        n = fread(&msghdr, sizeof(Wsr88d_msg_hdr), 1, wf->fptr);
+    }
+    else{
+        fprintf(stderr, "Error: reached unexpected end of file.\n");
+    } 
 
     /* printf("msgtype = %d\n", msghdr.msg_type); */
     msg_hdr_size = sizeof(Wsr88d_msg_hdr) - sizeof(msghdr.rpg);
@@ -596,8 +646,15 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 	     * halfwords; convert it to bytes.
 	     */
 	    msg_size = (int) msghdr.msg_size * 2 - msg_hdr_size;
-
-	    n = read_wsr88d_ray_m31(wf, msg_size, &wsr88d_ray);
+            remaining_size -= msg_size;
+            if(remaining_size>0){
+	        n = read_wsr88d_ray_m31(wf, msg_size, &wsr88d_ray);
+            }
+            else{
+                fprintf(stderr, "Error: reached unexpected end of file.\n");
+                n=-1;
+            }
+           
 	    if (n <= 0) {
                 RSL_free_radar(radar);
                 fprintf(stderr,"Error: could not read ray.\n");
@@ -646,8 +703,15 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 	    }
 	}
 	else { /* msg_type not 31 */
-	    n = fread(&non31_seg_remainder, sizeof(non31_seg_remainder), 1,
-		    wf->fptr);
+            remaining_size -= sizeof(non31_seg_remainder)
+            if(remaining_size>0){
+	        n = fread(&non31_seg_remainder, sizeof(non31_seg_remainder), 1,
+		        wf->fptr);
+            }
+            else{
+                fprintf(stderr, "Error: reached unexpected end of file.\n");
+                n=-1;
+            }
 	    if (n < 1) {
 		fprintf(stderr,"Warning: load_wsr88d_m31_into_radar: ");
 		if (feof(wf->fptr) != 0)
@@ -667,7 +731,14 @@ Radar *wsr88d_load_m31_into_radar(Wsr88d_file *wf)
 
 	/* If not at end of volume scan, read next message header. */
 	if (wsr88d_ray.ray_hdr.radial_status != END_VOS) {
-	    n = fread(&msghdr, sizeof(Wsr88d_msg_hdr), 1, wf->fptr);
+            remaining_size -= sizeof(Wsr88d_msg_hdr);
+            if(remaining_size>0){
+	        n = fread(&msghdr, sizeof(Wsr88d_msg_hdr), 1, wf->fptr);
+            }
+            else{
+                fprintf(stderr, "Error: reached unexpected end of file.\n");
+                n=-1;
+            }
 	    if (n < 1) {
 		fprintf(stderr,"Warning: load_wsr88d_m31_into_radar: ");
 		if (feof(wf->fptr) != 0)
