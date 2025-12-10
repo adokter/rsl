@@ -1,6 +1,10 @@
 /* Changes for RSL
  *
  *---------------------------------------------------------------------
+ * dev version (latest edit Dec 10 2025)
+ * 1. wsr88d.c check for invalid ray indices that can occur for corrupted
+ *    NEXRAD files, preventing segfault (#30)
+ *---------------------------------------------------------------------
  * v1.50 Released March 1, 2017
  * 1. nsig.c (nsig_read_ray), nsig_to_radar.c: Minor bug fix in the handling
  *    of errors in Sigmet data compression codes.
