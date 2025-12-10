@@ -501,6 +501,10 @@ int wsr88d_read_sweep(Wsr88d_file *wf, Wsr88d_sweep *wsr88d_sweep)
                 "records.\n", ray_num, nrec+1);
       }
       */
+      if (ray_num < 0 || ray_num > MAX_RAYS_IN_SWEEP) {
+        RSL_printf("Data says %d is ray_num, but expecting value between 0 and %i, aborting ray read in wsr88d_read_sweep.\n", ray_num, MAX_RAYS_IN_SWEEP);
+        return -1;
+      }
       if (wsr88d_sweep->ray[ray_num] == NULL) {
         wsr88d_sweep->ray[ray_num] = (Wsr88d_ray *) malloc (sizeof(Wsr88d_ray));
       }
