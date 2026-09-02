@@ -456,6 +456,8 @@ Radar *RSL_wsr88d_to_radar(char *infile, char *call_or_first_tape_file)
       radar = wsr88d_merge_split_cuts(radar);
       if ((radar->h.vcp == 12 || radar->h.vcp == 212) && !keep_sails) 
           wsr88d_remove_sails_sweep(radar);
+  } else {
+      radar = RSL_prune_radar(radar);
   }
   return radar;
 }

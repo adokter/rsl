@@ -1,10 +1,12 @@
 /* Changes for RSL
  *
  *---------------------------------------------------------------------
- * dev version (latest edit Feb 19 2026)
+ * dev version (latest edit Sep 2 2026)
  * 1. wsr88d.c check for invalid ray indices that can occur for corrupted
  *    NEXRAD files, preventing segfault (#30)
  * 2. wsr88d_locations.dat: add missing KHDC radar
+ * 3. add VCP 35 parameters and prune out unused sweeps when not running with
+ *    split cut merging. Thanks to Stefan Slonevskiy (#33).
  *---------------------------------------------------------------------
  * v1.50 Released March 1, 2017
  * 1. nsig.c (nsig_read_ray), nsig_to_radar.c: Minor bug fix in the handling
