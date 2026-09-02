@@ -3,8 +3,8 @@
  *---------------------------------------------------------------------
  * dev version (latest edit Sep 2 2026)
  * 1. wsr88d.c check for invalid ray indices that can occur for corrupted
- *    NEXRAD files, preventing segfault (#30)
- * 2. wsr88d_locations.dat: add missing KHDC radar
+ *    NEXRAD files, preventing segfault (#30).
+ * 2. wsr88d_locations.dat: add missing KHDC radar (#32).
  * 3. add VCP 35 parameters and prune out unused sweeps when not running with
  *    split cut merging. Thanks to Stefan Slonevskiy (#33).
  *---------------------------------------------------------------------
